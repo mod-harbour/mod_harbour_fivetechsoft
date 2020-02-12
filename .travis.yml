@@ -1,0 +1,21 @@
+language: c
+os: linux
+compiler: gcc
+addons:
+  apt_packages:
+    # Harbour dependencies
+    - libcurl4-openssl-dev
+    - libpcre3-dev
+    # mod_harbour dependencies
+    - apache2-dev
+
+# Compiling Harbour.
+install:
+  - git clone --depth=1 https://github.com/harbour/core.git harbour
+  - cd harbour
+  - HB_USER_CFLAGS="-fPIC" make
+  - cd ..
+
+# Compiling mod_harbour.
+script:
+  - harbour/bin/linux/gcc/hbmk2 hbmk2/linux/modharbour.hbp
